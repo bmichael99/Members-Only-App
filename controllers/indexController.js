@@ -19,7 +19,7 @@ exports.showSignUp = (req,res) => {
 exports.SignUpPost = async (req,res, next) => {
   try{
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    await db.createUser(req.body.username,hashedPassword);
+    await db.createUser(req.body.first_name, req.body.last_name, req.body.username,hashedPassword);
     res.redirect("/");
   }
   catch(err){
