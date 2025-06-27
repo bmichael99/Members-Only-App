@@ -1,0 +1,14 @@
+.message-info{
+  display:flex;
+  justify-content: space-between;
+  color:rgb(83, 83, 83);
+}
+
+.message-card{
+  max-width:450px;
+}
+
+p{
+  margin:0;
+  padding:0;
+}
