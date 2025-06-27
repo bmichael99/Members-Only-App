@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <% if (locals.user) {%>
+    <h1>Create Message</h1>
+    <form action="/create-message" method="POST">
+      <label for="message_title">Title</label> <br>
+      <input id="message_title" name="message_title" placeholder="title" type="text" /><br>
+      <label for="message_content">Message</label> <br>
+      <textarea name="message_content" id="message_content" cols="75" rows="20"></textarea><br>
+      <button type="submit">Create New Message</button>
+    </form>
+  <%}%>
+</body>
+</html>
