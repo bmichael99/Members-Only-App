@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<body>
+  <% if (locals.user) {%>
+    <h1>Insert Invite Only Password</h1>
+  <form action="/join-club" method="POST">
+    <label for="secret_password">Secret Password</label> <br>
+    <input id="secret_password" name="secret_password" placeholder="password" type="text" />
+    <button type="submit">Sign Up</button>
+  </form>
+  <%}%>
+</body>
+</html>
