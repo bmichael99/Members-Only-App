@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
-  <% if (locals.user) {%>
     <h1>Create Message</h1>
     <form action="/create-message" method="POST">
       <label for="message_title">Title</label> <br>
@@ -16,6 +15,5 @@
       <textarea name="message_content" id="message_content" cols="75" rows="20"></textarea><br>
       <button type="submit">Create New Message</button>
     </form>
-  <%}%>
 </body>
 </html>
