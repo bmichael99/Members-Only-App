@@ -2,15 +2,21 @@ const { body, validationResult } = require("express-validator");
 const db = require("../db/queries")
 const passport = require("passport");
 const bcrypt = require("bcryptjs")
+require('dotenv').config()
 
 
-exports.showHomePage = (req,res) => {
+exports.showHomePage = async (req,res) => {
   //Can do this instead of passing in req.user to the template. 
   //Now we can access this local variable in any view
+  const messages = await db.getMessages();
+  //console.log(messages);
   res.locals.user = req.user; 
-
+  res.locals.messages = messages;
+  //console.log(req.user);
   res.render('index', {title: 'Express Template!'});
 };
+
+
 
 exports.showSignUp = (req,res) => {
   res.render('sign-up-form');
@@ -41,4 +47,30 @@ exports.LogOutGet = (req,res,next) => {
     }
     res.redirect("/");
   });
+};
+
+
+exports.showJoinClubPage = (req,res) => {
+  res.locals.user = req.user; 
+  console.log(req.user);
+  res.render('join-club-form', {title: 'Join Club'});
+};
+
+exports.JoinClubPost = (req,res) => {
+  if(req.body.secret_password == process.env.SECRET_PASSWORD)
+    db.upgradeMember(req.user.id);
+
+  res.redirect("/");
+};
+
+exports.showCreateMessagePage = (req,res) => {
+  res.locals.user = req.user; 
+  console.log(req.user);
+  res.render('create-message-form', {title: 'Create Message'});
+};
+
+exports.CreateMessagePost = async (req,res) => {
+  //console.log(req.body);
+  await db.createMessage(req.body.message_title,req.body.message_content,req.user.id);
+  res.redirect("/");
 };
