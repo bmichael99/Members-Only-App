@@ -5,6 +5,8 @@ const session = require("express-session");
 const passport = require("passport");
 const bcrypt = require("bcryptjs")
 const LocalStrategy = require('passport-local').Strategy;
+const pgSession = require('connect-pg-simple')(session);
+require('dotenv').config();
 
 //imports the express framework
 const express = require("express");
@@ -27,13 +29,20 @@ app.use(express.static(assetsPath));
 //parse form data into req.body
 app.use(express.urlencoded({ extended: true }));
 
+const sessionStore = new pgSession({
+    pool : pool,                // Connection pool
+    createTableIfMissing : true,
+    // Insert other connect-pg-simple options here
+  });
+
 //passport setup
-app.use(session({secret: "cats", resave: false, saveUninitialized: false }));
+app.use(session({
+  store: sessionStore,
+  secret: process.env.SESSION_PASSWORD,
+  resave: false,
+  saveUninitialized: false }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
-
-
-
 
 
 passport.use(
