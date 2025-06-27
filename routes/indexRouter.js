@@ -9,6 +9,12 @@ indexRouter.post("/sign-up", indexController.SignUpPost);
 indexRouter.post("/log-in", indexController.LogInPost);
 indexRouter.get("/log-out", indexController.LogOutGet);
 
+indexRouter.get("/join-club", indexController.showJoinClubPage);
+indexRouter.post("/join-club", indexController.JoinClubPost);
+
+indexRouter.get("/create-message", indexController.showCreateMessagePage);
+indexRouter.post("/create-message", indexController.CreateMessagePost);
+
 module.exports = indexRouter;
 
 
