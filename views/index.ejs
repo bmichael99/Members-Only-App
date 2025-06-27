@@ -4,14 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <h1><%= title %></h1>
     <% if (locals.user) {%>
     <h1>WELCOME BACK <%= user.username %></h1>
     <a href="/log-out">LOG OUT</a>
+    <a href="/join-club">JOIN CLUB</a>
+    <a href="/create-message">CREATE MESSAGE</a>
   <% } else { %>
-  <h2>please log in</h2>
+  <h2>please log in or sign up</h2>
   <form action="/log-in" method="POST">
     <label for="username">Username</label>
     <input id="username" name="username" placeholder="username" type="text" />
@@ -19,6 +22,29 @@
     <input id="password" name="password" type="password" />
     <button type="submit">Log In</button>
   </form>
+  <a href="/sign-up">sign up</a>
   <%}%>
+
+  <% if (locals.messages) {%>
+    <% locals.messages.forEach(message => { %>
+     
+      <div class="message-card">
+        <h3 class="message-title"><%=message.title%></h3>
+        <p class="message-text"><%=message.content%></p>
+        <div class="message-info">
+          <% if (locals.user && locals.user.membership_status == "premium") {%>
+            <p class="message-user"><%=message.user_id%></p>
+            <p class="message-time"><%=message.created_at%></p>
+          <%} else {%>
+            <p class="message-user">XXXXXXXX</p>
+            <p class="message-time">XXXX-XX-XX</p>
+          <%}%>
+        </div>
+      </div>
+
+    <% }) %>
+  <%}%>
+
+
 </body>
 </html>
