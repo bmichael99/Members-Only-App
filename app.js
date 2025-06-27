@@ -40,7 +40,12 @@ app.use(session({
   store: sessionStore,
   secret: process.env.SESSION_PASSWORD,
   resave: false,
-  saveUninitialized: false }));
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 *24
+  },
+ }));
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 

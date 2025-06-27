@@ -9,6 +9,8 @@ exports.showHomePage = async (req,res) => {
   //Can do this instead of passing in req.user to the template. 
   //Now we can access this local variable in any view
   const messages = await db.getMessages();
+  //if(req.session)
+    //console.log(req.session);
   //console.log(messages);
   res.locals.user = req.user; 
   res.locals.messages = messages;
@@ -51,9 +53,12 @@ exports.LogOutGet = (req,res,next) => {
 
 
 exports.showJoinClubPage = (req,res) => {
-  res.locals.user = req.user; 
-  console.log(req.user);
-  res.render('join-club-form', {title: 'Join Club'});
+  if(req.isAuthenticated()){
+      res.render('join-club-form', {title: 'Join Club'});
+  }else{
+    res.redirect("/");
+  }
+
 };
 
 exports.JoinClubPost = (req,res) => {
@@ -64,9 +69,11 @@ exports.JoinClubPost = (req,res) => {
 };
 
 exports.showCreateMessagePage = (req,res) => {
-  res.locals.user = req.user; 
-  console.log(req.user);
+  if(req.isAuthenticated()){
   res.render('create-message-form', {title: 'Create Message'});
+  }else{
+    res.redirect("/");
+  }
 };
 
 exports.CreateMessagePost = async (req,res) => {
