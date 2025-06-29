@@ -2,6 +2,7 @@ const { body, validationResult } = require("express-validator");
 const db = require("../db/queries")
 const passport = require("passport");
 const bcrypt = require("bcryptjs")
+const isAuth = require("./authMiddleware").isAuth;
 require('dotenv').config()
 
 
@@ -53,12 +54,7 @@ exports.LogOutGet = (req,res,next) => {
 
 
 exports.showJoinClubPage = (req,res) => {
-  if(req.isAuthenticated()){
-      res.render('join-club-form', {title: 'Join Club'});
-  }else{
-    res.redirect("/");
-  }
-
+  res.render('join-club-form', {title: 'Join Club'});
 };
 
 exports.JoinClubPost = (req,res) => {
@@ -69,11 +65,7 @@ exports.JoinClubPost = (req,res) => {
 };
 
 exports.showCreateMessagePage = (req,res) => {
-  if(req.isAuthenticated()){
   res.render('create-message-form', {title: 'Create Message'});
-  }else{
-    res.redirect("/");
-  }
 };
 
 exports.CreateMessagePost = async (req,res) => {
